@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xincan-k8s-provider
+  namespace: study
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: xincan-k8s-provider
+  template:
+    metadata:
+      labels:
+        app: xincan-k8s-provider
+    spec:
+      serviceAccountName: k8s-sa
+      containers:
+      - name: xincan-k8s-provider
+        image: base.xincan.cn/xincan/xincan-k8s-provider:0.0.1-SNAPSHOT
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        ports:
+        - name: http 
+          protocol: TCP 
+          containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: xincan-k8s-provider
+  namespace: study
+spec:
+  type: ClusterIP
+  selector:
+    app: xincan-k8s-provider
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
