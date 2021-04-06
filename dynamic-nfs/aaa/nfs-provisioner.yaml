@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nfs-client-provisioner
   # replace with namespace where provisioner is deployed
-  namespace: default
+  namespace: study
 spec:
   replicas: 1
   strategy:
@@ -24,6 +24,7 @@ spec:
           image: base.xincan.cn/library/nfs-client-provisioner:v1.5.2
           volumeMounts:
             - name: nfs-client-root
+              # 该文件夹是nfs-client-provisioner运行之后容器内部固定的文件夹它会mount到/nfs/data/nginx nfs服务器nginx文件夹下
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
@@ -31,9 +32,9 @@ spec:
             - name: NFS_SERVER
               value: 172.16.124.130
             - name: NFS_PATH
-              value: /nfs/data
+              value: /nfs/data/nginx
       volumes:
         - name: nfs-client-root
           nfs:
             server: 172.16.124.130
-            path: /nfs/data
+            path: /nfs/data/nginx
