@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seata-server-config
+  namespace: study
+data:
+  registry.conf: |
+    registry {
+      type = "file"
+      file {
+        name = "file.conf"
+      }
+    }
+    config {
+      type = "file"
+      file {
+        name = "file:/root/seata-config/file.conf"
+      }
+    }
+  file.conf: |
+    store {
+      ## aaa
+      mode = "db"
+
+      db {
+        datasource = "hikari"
+        dbType = "mysql"
+        driverClassName = "com.mysql.jdbc.Driver"
+        url = "jdbc:mysql://mysql-svc.study:3306/seata?rewriteBatchedStatements=true"
+        user = "root"
+        password = "root"
+        minConn = 5
+        maxConn = 100
+        globalTable = "global_table"
+        branchTable = "branch_table"
+        lockTable = "lock_table"
+        queryLimit = 100
+        maxWait = 5000
+      }
+    }
