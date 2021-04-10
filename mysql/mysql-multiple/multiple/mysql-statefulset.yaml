@@ -17,6 +17,7 @@ spec:
       initContainers:
       - name: init-mysql
         image: base.xincan.cn/library/mysql:v5.7.28
+        imagePullPolicy: IfNotPresent
         command:
         - bash
         - "-c"
@@ -41,6 +42,7 @@ spec:
           mountPath: /mnt/config-map
       - name: clone-mysql
         image: base.xincan.cn/library/xtrabackup:v1.0
+        imagePullPolicy: IfNotPresent
         command:
         - bash
         - "-c"
@@ -65,6 +67,7 @@ spec:
       containers:
       - name: mysql
         image: base.xincan.cn/library/mysql:v5.7.28
+        imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_ALLOW_EMPTY_PASSWORD
           value: "1"
@@ -96,6 +99,7 @@ spec:
           timeoutSeconds: 1
       - name: xtrabackup
         image: base.xincan.cn/library/xtrabackup:v1.0
+        imagePullPolicy: IfNotPresent
         ports:
         - name: xtrabackup
           containerPort: 3307
