@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  namespace: mysql
+  labels:
+    app: mysql
+data:
+  master.cnf: |
+    # Mmaster配置
+    [mysqld]
+    log-bin=mysqllog
+    skip-name-resolve
+  slave.cnf: |
+    # Slave配置
+    [mysqld]
+    super-read-only
+    skip-name-resolve
+    log-bin=mysql-bin
+    replicate-ignore-db=mysql
