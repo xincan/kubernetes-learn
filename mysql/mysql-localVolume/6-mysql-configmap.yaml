@@ -11,6 +11,13 @@ data:
     [mysqld]
     log-bin=mysqllog
     skip-name-resolve
+    #设置时区和字符集
+    default-time-zone='+8:00'
+    character-set-client-handshake=FALSE
+    character-set-server=utf8mb4
+    collation-server=utf8mb4_unicode_ci
+    init_connect='SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+
   slave.cnf: |
     # Slave配置
     [mysqld]
@@ -18,3 +25,9 @@ data:
     skip-name-resolve
     log-bin=mysql-bin
     replicate-ignore-db=mysql
+    #设置时区和字符集
+    default-time-zone='+8:00'
+    character-set-client-handshake=FALSE
+    character-set-server=utf8mb4
+    collation-server=utf8mb4_unicode_ci
+    init_connect='SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
