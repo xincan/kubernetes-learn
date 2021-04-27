@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql-nfs-client-provisioner
   # replace with namespace where provisioner is deployed
-  namespace: study
+  namespace: mysql
 spec:
   replicas: 1
   strategy:

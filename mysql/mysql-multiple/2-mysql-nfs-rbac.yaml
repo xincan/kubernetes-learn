@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: mysql-nfs-client-provisioner
   # replace with namespace where provisioner is deployed
-  namespace: study
+  namespace: mysql
 
 ---
 
@@ -11,6 +11,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: mysql-nfs-client-provisioner-runner
+  namespace: mysql
 rules:
   - apiGroups: [""]
     resources: ["persistentvolumes"]
@@ -31,11 +32,12 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: run-mysql-nfs-client-provisioner
+  namespace: mysql
 subjects:
   - kind: ServiceAccount
     name: mysql-nfs-client-provisioner
     # replace with namespace where provisioner is deployed
-    namespace: study
+    namespace: mysql
 roleRef:
   kind: ClusterRole
   name: mysql-nfs-client-provisioner-runner
@@ -48,7 +50,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-mysql-nfs-client-provisioner
   # replace with namespace where provisioner is deployed
-  namespace: study
+  namespace: mysql
 rules:
   - apiGroups: [""]
     resources: ["endpoints"]
@@ -61,12 +63,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: leader-locking-mysql-nfs-client-provisioner
   # replace with namespace where provisioner is deployed
-  namespace: study
+  namespace: mysql
 subjects:
   - kind: ServiceAccount
     name: mysql-nfs-client-provisioner
     # replace with namespace where provisioner is deployed
-    namespace: study
+    namespace: mysql
 roleRef:
   kind: Role
   name: leader-locking-mysql-nfs-client-provisioner
