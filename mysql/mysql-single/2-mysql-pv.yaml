@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mysql-pv
+  namespace: mysql
 spec:
   accessModes:
   - ReadWriteOnce
@@ -11,7 +12,7 @@ spec:
     apiVersion: v1
     kind: PersistentVolumeClaim
     name: mysql-pvc
-    namespace: study
+    namespace: mysql
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   nfs:

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql-container
+        image: base.xincan.cn/library/mysql:v5.7.28
+        imagePullPolicy: IfNotPresent
+        args:
+        - --datadir
+        - /var/lib/mysql/data
+        env:
+        - name: MYSQL_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: user
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password 
+        ports:
+        - name: mysql
+          containerPort: 3306
+        livenessProbe:
+          exec:
+            command: ["mysqladmin", "ping", "-u${MYSQL_ROOT_USER}", "-p${MYSQL_ROOT_PASSWORD}"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command: ["mysqladmin", "ping", "-u${MYSQL_ROOT_USER}", "-p${MYSQL_ROOT_PASSWORD}"]
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+        - name: config
+          mountPath: /etc/mysql/conf.d/my.cnf
+          subPath: my.cnf
+        - name: localtime
+          mountPath: /etc/localtime
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+      - name: config      
+        configMap:
+          name: mysql-config
+      - name: localtime
+        hostPath:
+          type: File
+          path: /etc/localtime
+
