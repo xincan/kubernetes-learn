@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: rabbitmq
-        image: base.xincan.cn/library/rabbitmq:v3.7-management
+        image: base.xincan.cn/library/rabbitmq:v3.8.16-management-alipine
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 15672
