@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-cluster
+  namespace: rabbitmq
+  labels:
+    app: rabbitmq-cluster
+spec:
+  selector:
+    app: rabbitmq-cluster
+  ports:
+  - name: http
+    port: 15672
+    protocol: TCP
+    targetPort: 15672
+  - name: amqp
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  type: ClusterIP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-cluster-service
+  namespace: rabbitmq
+  labels:
+    app: rabbitmq-cluster
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 15672
+    targetPort: 15672
+  - name: amqp
+    protocol: TCP
+    port: 5672
+    targetPort: 5672
+  type: NodePort
+  selector:
+    app: rabbitmq-cluster

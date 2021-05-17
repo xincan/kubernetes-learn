@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-server
+  namespace: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: base.xincan.cn/library/redis:v6.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: client
+          containerPort: 6379
+        - name: server
+          containerPort: 16379
+        command: ["redis-server", "/conf/redis.conf"]
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+        - name: redis-nfs-storage
+          mountPath: /data
+      volumes:
+      - name: redis-nfs-storage
+        persistentVolumeClaim:
+          claimName: redis-pvc
+      - name: conf
+        configMap:
+          name: redis-config
+          defaultMode: 0755
