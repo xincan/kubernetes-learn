@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: seata-server-config
-  namespace: study
+  namespace: seata
 data:
   registry.conf: |
     registry {
@@ -19,16 +19,16 @@ data:
     }
   file.conf: |
     store {
-      ## aaa
+   
       mode = "db"
 
       db {
         datasource = "hikari"
         dbType = "mysql"
         driverClassName = "com.mysql.jdbc.Driver"
-        url = "jdbc:mysql://mysql-svc.study:3306/seata?rewriteBatchedStatements=true"
+        url = "jdbc:mysql://mysql-service.mysql:3306/seata?rewriteBatchedStatements=true"
         user = "root"
-        password = "root"
+        password = "123456"
         minConn = 5
         maxConn = 100
         globalTable = "global_table"
