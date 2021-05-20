@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nacos-nfs-storage
+  namespace: nacos
+provisioner: fuseim.pri/ifs
+parameters:
+  archiveOnDelete: "false"
