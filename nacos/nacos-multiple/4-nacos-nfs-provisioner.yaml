@@ -28,9 +28,9 @@ spec:
             - name: NFS_SERVER
               value: 172.16.124.130
             - name: NFS_PATH
-              value: /nfs/data/nacos
+              value: /nfs/data/nacos-multiple
       volumes:
         - name: nfs-client-root
           nfs:
             server: 172.16.124.130
-            path: /nfs/data/nacos
+            path: /nfs/data/nacos-multiple
