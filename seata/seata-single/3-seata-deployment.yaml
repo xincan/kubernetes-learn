@@ -20,6 +20,10 @@ spec:
           image: base.xincan.cn/library/seata-server:v1.4.1
           imagePullPolicy: IfNotPresent
           env:
+            - name: SEATA_MODE
+              value: "nacos"
+            - name: SEATA_PORT
+              value: "8091"
             - name: SEATA_CONFIG_NAME
               value: file:/root/seata-config/registry
           ports:

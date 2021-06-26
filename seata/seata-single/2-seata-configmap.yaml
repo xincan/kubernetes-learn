@@ -6,35 +6,22 @@ metadata:
 data:
   registry.conf: |
     registry {
-      type = "file"
-      file {
-        name = "file.conf"
+      type = "nacos"
+      nacos {
+        application = "seata-service"
+        serverAddr = "nacos-service.nacos:8848"
+        namespace = "xincan"
+        username = "nacos"
+        password = "nacos"
       }
     }
     config {
-      type = "file"
-      file {
-        name = "file:/root/seata-config/file.conf"
-      }
-    }
-  file.conf: |
-    store {
-   
-      mode = "db"
-
-      db {
-        datasource = "hikari"
-        dbType = "mysql"
-        driverClassName = "com.mysql.jdbc.Driver"
-        url = "jdbc:mysql://mysql-service.mysql:3306/seata?rewriteBatchedStatements=true"
-        user = "root"
-        password = "123456"
-        minConn = 5
-        maxConn = 100
-        globalTable = "global_table"
-        branchTable = "branch_table"
-        lockTable = "lock_table"
-        queryLimit = 100
-        maxWait = 5000
+      type = "nacos"
+      nacos {
+        serverAddr = "nacos-service.nacos:8848"
+        namespace = "xincan"
+        group = "SEATA_GROUP"
+        username = "nacos"
+        password = "nacos"
       }
     }
