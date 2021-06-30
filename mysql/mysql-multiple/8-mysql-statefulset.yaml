@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
       - name: init-mysql
-        image: base.xincan.cn/library/mysql:v5.7.28
+        image: base.hatech.com.cn/library/mysql:v5.7.28
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -50,7 +50,7 @@ spec:
         - name: config-map
           mountPath: /mnt/config-map
       - name: clone-mysql
-        image: base.xincan.cn/library/xtrabackup:v1.0
+        image: base.hatech.com.cn/library/xtrabackup:v1.0
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -81,7 +81,7 @@ spec:
           mountPath: /etc/mysql/conf.d
       containers:
       - name: mysql
-        image: base.xincan.cn/library/mysql:v5.7.28
+        image: base.hatech.com.cn/library/mysql:v5.7.28
         env:
 #        - name: MYSQL_ALLOW_EMPTY_PASSWORD
 #          value: "1"
@@ -117,7 +117,7 @@ spec:
           periodSeconds: 2
           timeoutSeconds: 1
       - name: xtrabackup
-        image: base.xincan.cn/library/xtrabackup:v1.0
+        image: base.hatech.com.cn/library/xtrabackup:v1.0
         ports:
         - name: xtrabackup
           containerPort: 3307

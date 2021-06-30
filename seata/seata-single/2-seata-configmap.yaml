@@ -10,7 +10,8 @@ data:
       nacos {
         application = "seata-service"
         serverAddr = "nacos-service.nacos:8848"
-        namespace = "xincan"
+        namespace = "seata-0001"
+        group = "SEATA_GROUP"
         username = "nacos"
         password = "nacos"
       }
@@ -19,7 +20,7 @@ data:
       type = "nacos"
       nacos {
         serverAddr = "nacos-service.nacos:8848"
-        namespace = "xincan"
+        namespace = "seata-0001"
         group = "SEATA_GROUP"
         username = "nacos"
         password = "nacos"

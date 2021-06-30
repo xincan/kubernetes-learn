@@ -6,7 +6,7 @@ metadata:
 data:
   mysql.database.num: "1"
   mysql.service.host: "mysql-service.mysql"
-  mysql.service.db.name: "nacos-single"
+  mysql.service.db.name: "nacos"
   mysql.service.port: "3306"
   mysql.user: "root"
   mysql.password: "123456"

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mysql-container
-        image: base.xincan.cn/library/mysql:v5.7.28
+        image: base.hatech.com.cn/library/mysql:v5.7.28
         imagePullPolicy: IfNotPresent
         args:
         - --datadir

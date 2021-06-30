@@ -34,7 +34,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: nginx
-        image: base.xincan.cn/library/nginx:v1.7.9
+        image: base.hatech.com.cn/library/nginx:v1.21.0-alpine
         ports:
         - containerPort: 80
           name: web
