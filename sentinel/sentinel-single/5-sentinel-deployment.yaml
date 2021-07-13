@@ -24,7 +24,7 @@ spec:
           - name: client
             containerPort: 8858
           - name: api
-            containerPort: 8868
+            containerPort: 8719
           resources:
             limits:
               cpu: 450m

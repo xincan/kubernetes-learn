@@ -6,11 +6,11 @@ metadata:
   labels:
     app: seata
 spec:
-  type: NodePort
-  ports:
-    - port: 8091
-      nodePort: 30091
-      protocol: TCP
-      name: http
   selector:
     app: seata
+  type: NodePort
+  ports:
+    - name: http
+      port: 8091
+      nodePort: 31180
+      protocol: TCP
