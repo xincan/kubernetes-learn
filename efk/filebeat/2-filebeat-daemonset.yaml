@@ -2,20 +2,32 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: filebeat
-  namespace: elasticsearch
+  namespace: efk
   labels:
-    elastic-app: filebeat
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+    xincan.kubernetes.io/app: filebeat
 spec:
   selector:
     matchLabels:
-      elastic-app: filebeat
+      xincan.kubernetes.io/company: xincan.cn
+      xincan.kubernetes.io/version: 0.0.1
+      xincan.kubernetes.io/type: plugins
+      xincan.kubernetes.io/product: xincan
+      xincan.kubernetes.io/app: filebeat
   template:
     metadata:
       name: filebeat
       labels:
-        elastic-app: filebeat
+        xincan.kubernetes.io/company: xincan.cn
+        xincan.kubernetes.io/version: 0.0.1
+        xincan.kubernetes.io/type: plugins
+        xincan.kubernetes.io/product: xincan
+        xincan.kubernetes.io/app: filebeat
     spec:
-      serviceAccountName: filebeat
+      serviceAccountName: fk-rbac
       terminationGracePeriodSeconds: 30
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -28,7 +40,7 @@ spec:
         ]
         env:
         - name: ELASTICSEARCH_HOST
-          value: elasticsearch-service.elasticsearch
+          value: elasticsearch-node-service.efk
         - name: ELASTICSEARCH_PORT
           value: "9200"
         - name: ELASTICSEARCH_USERNAME

@@ -8,7 +8,6 @@ metadata:
     xincan.kubernetes.io/version: 0.0.1
     xincan.kubernetes.io/type: plugins
     xincan.kubernetes.io/product: xincan
-    xincan.kubernetes.io/app: elasticsearch
-provisioner: fuseim.pri/ifs # or choose another name, must match deployment's env PROVISIONER_NAME'
+provisioner: nfs.xincan.efk/elasticsearch # or choose another name, must match deployment's env PROVISIONER_NAME'
 parameters:
   archiveOnDelete: "false"

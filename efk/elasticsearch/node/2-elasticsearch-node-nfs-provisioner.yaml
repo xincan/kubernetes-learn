@@ -1,14 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: elasticsearch-nfs-client-provisioner
+  name: elasticsearch-node-nfs-client-provisioner
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
     xincan.kubernetes.io/version: 0.0.1
     xincan.kubernetes.io/type: plugins
     xincan.kubernetes.io/product: xincan
-    xincan.kubernetes.io/app: elasticsearch
 spec:
   replicas: 1
   strategy:
@@ -19,7 +18,6 @@ spec:
       xincan.kubernetes.io/version: 0.0.1
       xincan.kubernetes.io/type: plugins
       xincan.kubernetes.io/product: xincan
-      xincan.kubernetes.io/app: elasticsearch
   template:
     metadata:
       labels:
@@ -27,11 +25,10 @@ spec:
         xincan.kubernetes.io/version: 0.0.1
         xincan.kubernetes.io/type: plugins
         xincan.kubernetes.io/product: xincan
-        xincan.kubernetes.io/app: elasticsearch
     spec:
-      serviceAccountName: efk-rbac
+      serviceAccountName: elasticsearch-rbac
       containers:
-        - name: elasticsearch-nfs-client-provisioner
+        - name: elasticsearch-node-nfs-client-provisioner
           image: base.hatech.com.cn/library/nfs-client-provisioner:v1.5.2
           volumeMounts:
             - name: nfs-client-root
@@ -39,7 +36,7 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: fuseim.pri/ifs
+              value: nfs.xincan.efk/elasticsearch
             - name: NFS_SERVER
               value: 192.168.1.80
             - name: NFS_PATH

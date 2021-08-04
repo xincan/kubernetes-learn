@@ -31,7 +31,7 @@ spec:
         xincan.kubernetes.io/product: xincan
         xincan.kubernetes.io/app: elasticsearch
     spec:
-      serviceAccountName: efk-rbac
+      serviceAccountName: elasticsearch-rbac
       restartPolicy: Always
       containers:
         - name: elasticsearch-node
@@ -77,7 +77,6 @@ spec:
         volume.beta.kubernetes.io/storage-class: efk-nfs-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      # storageClassName: mysql-local-storage
       resources:
         requests:
           storage: 2Gi

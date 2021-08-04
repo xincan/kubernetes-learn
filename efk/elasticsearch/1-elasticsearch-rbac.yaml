@@ -1,20 +1,19 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: efk-rbac
+  name: elasticsearch-rbac
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
     xincan.kubernetes.io/version: 0.0.1
     xincan.kubernetes.io/type: plugins
     xincan.kubernetes.io/product: xincan
-
 ---
 
-kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
-  name: efk-rbac
+  name: elasticsearch-rbac
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
@@ -24,7 +23,7 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["pods"]
-    verbs: ["get","watch","list"]
+    verbs: ["get","watch","list", "create", "delete"]
   - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "create", "delete"]
@@ -40,10 +39,10 @@ rules:
 
 ---
 
-kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
-  name: efk-rbac
+  name: elasticsearch-rbac
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
@@ -52,19 +51,19 @@ metadata:
     xincan.kubernetes.io/product: xincan
 subjects:
   - kind: ServiceAccount
-    name: efk-nfs-client-provisioner
+    name: elasticsearch-rbac
     namespace: efk
 roleRef:
   kind: ClusterRole
-  name: efk-rbac
+  name: elasticsearch-rbac
   apiGroup: rbac.authorization.k8s.io
 
 ---
 
-kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
 metadata:
-  name: efk-rbac
+  name: elasticsearch-rbac
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
@@ -78,10 +77,10 @@ rules:
 
 ---
 
-kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
-  name: efk-rbac
+  name: elasticsearch-rbac
   namespace: efk
   labels:
     xincan.kubernetes.io/company: xincan.cn
@@ -90,9 +89,9 @@ metadata:
     xincan.kubernetes.io/product: xincan
 subjects:
   - kind: ServiceAccount
-    name: efk-rbac
+    name: elasticsearch-rbac
     namespace: efk
 roleRef:
   kind: Role
-  name: efk-rbac
+  name: elasticsearch-rbac
   apiGroup: rbac.authorization.k8s.io
