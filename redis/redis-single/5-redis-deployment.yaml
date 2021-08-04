@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: base.xincan.cn/library/redis:v6.2
+        image: base.hatech.com.cn/library/redis:v6.2
         imagePullPolicy: IfNotPresent
         ports:
         - name: client

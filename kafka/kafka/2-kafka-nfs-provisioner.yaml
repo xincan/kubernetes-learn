@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-nfs-client-provisioner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      xincan.kubernetes.io/company: xincan.cn
+      xincan.kubernetes.io/version: 0.0.1
+      xincan.kubernetes.io/type: plugins
+      xincan.kubernetes.io/product: xincan
+  template:
+    metadata:
+      labels:
+        xincan.kubernetes.io/company: xincan.cn
+        xincan.kubernetes.io/version: 0.0.1
+        xincan.kubernetes.io/type: plugins
+        xincan.kubernetes.io/product: xincan
+    spec:
+      serviceAccountName: zk-nfs-client-provisioner
+      containers:
+        - name: kafka-nfs-client-provisioner
+          image: base.hatech.com.cn/library/nfs-client-provisioner:v1.5.2
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: nfs.xincan.kafka/kafka #fuseim.pri/ifs
+            - name: NFS_SERVER
+              value: 192.168.1.80
+            - name: NFS_PATH
+              value: /hatech/nfs/data/xincan/kafka-multiple
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 192.168.1.80
+            path: /hatech/nfs/data/xincan/kafka-multiple

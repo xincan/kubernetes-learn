@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: zk-nfs-client-provisioner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: zk-nfs-client-provisioner-runner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get","watch","list", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "update", "patch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: run-zk-nfs-client-provisioner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+subjects:
+  - kind: ServiceAccount
+    name: zk-nfs-client-provisioner
+    namespace: kafka
+roleRef:
+  kind: ClusterRole
+  name: zk-nfs-client-provisioner-runner
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: leader-locking-zk-nfs-client-provisioner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: leader-locking-zk-nfs-client-provisioner
+  namespace: kafka
+  labels:
+    xincan.kubernetes.io/company: xincan.cn
+    xincan.kubernetes.io/version: 0.0.1
+    xincan.kubernetes.io/type: plugins
+    xincan.kubernetes.io/product: xincan
+subjects:
+  - kind: ServiceAccount
+    name: zk-nfs-client-provisioner
+    namespace: kafka
+roleRef:
+  kind: Role
+  name: leader-locking-zk-nfs-client-provisioner
+  apiGroup: rbac.authorization.k8s.io

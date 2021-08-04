@@ -16,6 +16,6 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   nfs:
-    path: /nfs/data/redis-single
-    server: 172.16.124.130
+    path: /hatech/nfs/data/xincan/redis-single
+    server: 192.168.1.80
   volumeMode: Filesystem
