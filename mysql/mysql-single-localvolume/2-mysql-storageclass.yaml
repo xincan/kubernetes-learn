@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mysql-local-storage
+  namespace: mysql
+  labels:
+    app: mysql
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Delete
+
